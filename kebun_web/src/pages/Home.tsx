@@ -1,11 +1,17 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, formatIdr, waLink } from "../api";
 import type { Article, Product } from "../types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/pagination";
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [activeBanner, setActiveBanner] = useState(0);
   const mapsUrl = import.meta.env.VITE_MAPS_URL || "https://g.co/kgs/ttHN2G";
 
   useEffect(() => {
@@ -21,108 +27,152 @@ export default function Home() {
     })();
   }, []);
 
-  const hero = useMemo(() => articles?.[0], [articles]);
-  const heroCover =
-    hero?.cover_image_url ||
+  const heroCoverFallback =
     "https://images.unsplash.com/photo-1512568400610-62da28bc8a13?auto=format&fit=crop&w=2400&q=80";
+
+  const heroBanners = useMemo(
+    () =>
+      articles.length
+        ? articles
+        : [
+            {
+              id: 0,
+              title: "Ruang Komunitas Kopi: Ngopi, Belajar, Berkolaborasi",
+              excerpt:
+                "Tempat untuk roasting, seduh, diskusi, dan pengembangan masyarakat - dilengkapi artikel kopi yang mudah dipahami.",
+              slug: "",
+              cover_image_url: heroCoverFallback,
+            } as Article,
+          ],
+    [articles]
+  );
 
   const featuredProducts = useMemo(() => products.slice(0, 6), [products]);
   const latestArticles = useMemo(() => articles.slice(0, 8), [articles]);
 
-  const todayItems = [
-    { label: "Promo", title: "Diskon manual brew 10% (Hari Ini)", meta: "Mulai 10.00" },
-    { label: "Kelas", title: "Mini cupping: kenali rasa & aroma", meta: "Sore 16.00" },
-    { label: "Komunitas", title: "Ngobrol kopi: roasting & brew ratio", meta: "Malam 19.30" },
-    { label: "Rilis", title: "Artikel baru: dasar espresso untuk pemula", meta: "Terbit hari ini" },
-  ];
+  useEffect(() => {
+    setActiveBanner(0);
+  }, [heroBanners.length]);
 
   return (
     <div className="bg-white">
-      {/* HERO (mirip Historia) */}
+      {/* HERO CAROUSEL (artikel menjadi banner) */}
       <section className="relative">
-        <div className="h-[52vh] md:h-[62vh] w-full overflow-hidden">
-          <img src={heroCover} alt="Hero" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-zinc-950/10" />
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_-140px_140px_rgba(0,0,0,0.55)]" />
-        </div>
+        <div className="h-[56vh] md:h-[70vh] w-full overflow-hidden relative">
+          <Swiper
+            className="hero-swiper h-full"
+            modules={[Autoplay, EffectFade, Pagination, Navigation]}
+            effect="fade"
+            speed={800}
+            loop={heroBanners.length > 1}
+            autoplay={{
+              delay: 6000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            pagination={{ clickable: true }}
+            navigation={{
+              prevEl: ".hero-prev",
+              nextEl: ".hero-next",
+            }}
+            onSlideChange={(swiper) => setActiveBanner(swiper.realIndex)}
+          >
+            {heroBanners.map((b, idx) => {
+              const title = b.title || "Ruang Komunitas Kopi: Ngopi, Belajar, Berkolaborasi";
+              const description =
+                b.excerpt ||
+                "Tempat untuk roasting, seduh, diskusi, dan pengembangan masyarakat - dilengkapi artikel kopi yang mudah dipahami.";
+              const link = b.slug ? `/articles/${b.slug}` : mapsUrl;
+              const isExternal = !b.slug;
 
-        <div className="absolute inset-0">
-          <div className="max-w-7xl mx-auto px-4 h-full flex items-end pb-10">
-            <div className="max-w-2xl text-white space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-black">
-                Kebun Merdesa • Open Daily 09.00–23.00 🌿
-              </div>
+              return (
+                <SwiperSlide key={b.id || idx}>
+                  <div className="relative h-full w-full">
+                    <img
+                      src={b.cover_image_url || heroCoverFallback}
+                      alt={title}
+                      className="h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-zinc-950/10" />
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="max-w-4xl mx-auto px-5 text-center text-white">
+                        <div
+                          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/10 text-xs font-black transition-all duration-700 ${
+                            idx === activeBanner ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                          }`}
+                        >
+                          Kebun Merdesa - Open Daily 09.00-23.00
+                        </div>
 
-              <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
-                {hero?.title || "Ruang Komunitas Kopi: Ngopi, Belajar, Berkolaborasi"}
-              </h1>
+                        <h1
+                          className={`mt-4 text-3xl md:text-5xl font-black tracking-tight leading-tight transition-all duration-700 delay-100 ${
+                            idx === activeBanner ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                          }`}
+                        >
+                          {title}
+                        </h1>
 
-              <p className="text-white/80 text-sm md:text-base leading-relaxed">
-                {hero?.excerpt ||
-                  "Tempat untuk roasting, seduh, diskusi, dan pengembangan masyarakat—dilengkapi artikel/opini kopi yang mudah dipahami."}
-              </p>
+                        <p
+                          className={`mt-3 text-white/85 text-sm md:text-base leading-relaxed transition-all duration-700 delay-200 ${
+                            idx === activeBanner ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                          }`}
+                        >
+                          {description}
+                        </p>
 
-              <div className="flex flex-wrap gap-3 pt-2">
-                <a
-                  href={waLink("Halo Kebun Merdesa, saya mau tanya menu & pemesanan 😊")}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm"
-                >
-                  Pesan via WhatsApp
-                </a>
-
-                {hero?.slug ? (
-                  <Link
-                    to={`/articles/${hero.slug}`}
-                    className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-black text-sm"
-                  >
-                    Baca Artikel Utama
-                  </Link>
-                ) : (
-                  <a
-                    href={mapsUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-black text-sm"
-                  >
-                    Lihat Lokasi
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* TODAY BAR */}
-        <div className="bg-white border-b border-slate-200/70">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
-            <div className="shrink-0">
-              <div className="text-xs font-black uppercase tracking-widest text-emerald-700">hari ini</div>
-              <div className="text-sm font-black text-slate-900">Kebun Merdesa</div>
-            </div>
-
-            <div className="flex-1 overflow-x-auto">
-              <div className="flex gap-6 min-w-max pr-2">
-                {todayItems.map((t, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <div className="mt-1 w-2.5 h-2.5 rounded-full bg-emerald-600" />
-                    <div className="leading-tight">
-                      <div className="text-xs font-black text-slate-900">
-                        <span className="text-emerald-700">{t.label}</span> — {t.title}
+                        <div
+                          className={`mt-6 flex flex-wrap items-center justify-center gap-3 transition-all duration-700 delay-300 ${
+                            idx === activeBanner ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                          }`}
+                        >
+                          {isExternal ? (
+                            <a
+                              href={link}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm"
+                            >
+                              Lihat Lokasi
+                            </a>
+                          ) : (
+                            <Link
+                              to={link}
+                              className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm"
+                            >
+                              Baca Artikel
+                            </Link>
+                          )}
+                          <a
+                            href={waLink("Halo Kebun Merdesa, saya mau tanya menu & pemesanan")}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-6 py-3 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/15 text-white font-black text-sm"
+                          >
+                            Pesan via WhatsApp
+                          </a>
+                        </div>
                       </div>
-                      <div className="text-[11px] text-slate-500 font-semibold">{t.meta}</div>
                     </div>
-                    <div className="h-8 w-px bg-slate-200/70 ml-2" />
                   </div>
-                ))}
-              </div>
-            </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
 
-            <Link to="/articles" className="shrink-0 text-sm font-black text-emerald-700 hover:underline">
-              Lainnya →
-            </Link>
-          </div>
+          <button
+            type="button"
+            aria-label="Sebelumnya"
+            className="hero-prev absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white font-black hover:bg-white/20"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            aria-label="Berikutnya"
+            className="hero-next absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white font-black hover:bg-white/20"
+          >
+            ›
+          </button>
         </div>
       </section>
 
@@ -137,7 +187,7 @@ export default function Home() {
                 <div className="font-black text-lg">Opini Kopi</div>
               </div>
               <div className="p-4 text-sm text-slate-600 leading-relaxed">
-                Tulisan pendek tentang roasting, seduh, dan budaya kopi—bahasannya ringan.
+                Tulisan pendek tentang roasting, seduh, dan budaya kopi - bahasannya ringan.
                 <Link to="/articles" className="block mt-3 font-black text-emerald-700 hover:underline">
                   Selengkapnya →
                 </Link>
@@ -152,7 +202,7 @@ export default function Home() {
                   Dari basic ratio sampai tasting notes. Bisa booking via WhatsApp.
                 </p>
                 <a
-                  href={waLink("Halo Kebun Merdesa, saya mau ikut kelas brew/ cupping 😊")}
+                  href={waLink("Halo Kebun Merdesa, saya mau ikut kelas brew/ cupping")}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex mt-4 px-4 py-2 rounded-2xl bg-white text-emerald-700 font-black text-sm"
@@ -168,20 +218,20 @@ export default function Home() {
             <div className="rounded-3xl overflow-hidden border border-slate-200/70 bg-white shadow-sm">
               <div className="relative aspect-[16/9] bg-slate-100">
                 <img
-                  src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=2400&q=80"
+                  src="/assets/brand/gambar6.jpeg"
                   alt="Feature"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 text-white space-y-2">
                   <div className="inline-flex px-3 py-1 rounded-full bg-white/10 border border-white/10 text-xs font-black">
-                    Kebun Merdesa • Feature
+                    Kebun Merdesa - Feature
                   </div>
                   <div className="text-xl md:text-2xl font-black leading-tight">
                     Dari Kebun ke Cangkir: Kopi, Komunitas, dan Cerita
                   </div>
                   <div className="text-sm text-white/80">
-                    Mempertemukan kopi lokal dengan ruang belajar & kolaborasi.
+                    Mempertemukan kopi lokal dengan ruang belajar dan kolaborasi.
                   </div>
                 </div>
               </div>
@@ -200,7 +250,7 @@ export default function Home() {
                     Lokasi
                   </a>
                   <a
-                    href={waLink("Halo Kebun Merdesa, saya mau kolaborasi event/ workshop 😊")}
+                    href={waLink("Halo Kebun Merdesa, saya mau kolaborasi event/ workshop")}
                     target="_blank"
                     rel="noreferrer"
                     className="px-4 py-2 rounded-2xl bg-zinc-950 text-white font-black text-sm hover:bg-zinc-900"
@@ -303,13 +353,13 @@ export default function Home() {
               </div>
               <div className="p-4 space-y-3 text-sm">
                 <a className="block font-black text-emerald-700 hover:underline" href="#">
-                  Instagram • @kebunmerdesa
+                  Instagram - @kebunmerdesa
                 </a>
                 <a className="block font-black text-slate-900 hover:underline" href="#">
-                  TikTok • kebunmerdesa
+                  TikTok - kebunmerdesa
                 </a>
                 <a
-                  href={waLink("Halo Kebun Merdesa, saya mau tanya event/komunitas 😊")}
+                  href={waLink("Halo Kebun Merdesa, saya mau tanya event/komunitas")}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex w-full justify-center px-4 py-3 rounded-2xl bg-zinc-950 text-white font-black hover:bg-zinc-900"
@@ -396,7 +446,7 @@ export default function Home() {
                 </div>
                 <div className="p-4">
                   <a
-                    href={waLink(`Halo Kebun Merdesa, saya mau info kegiatan: ${v.title} 😊`)}
+                    href={waLink(`Halo Kebun Merdesa, saya mau info kegiatan: ${v.title}`)}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex w-full justify-center px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 font-black text-sm"
@@ -412,3 +462,4 @@ export default function Home() {
     </div>
   );
 }
+

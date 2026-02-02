@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 /* Base styling biar enak dilihat */
 :root {
@@ -12,4 +12,19 @@ body {
 
 body {
   margin: 0;
+}
+
+.hero-swiper .swiper-pagination {
+  bottom: 18px !important;
+}
+
+.hero-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+.hero-swiper .swiper-pagination-bullet-active {
+  background: #ffffff;
 }

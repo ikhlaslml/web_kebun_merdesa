@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NAV = [
@@ -31,16 +31,19 @@ export default function Navbar() {
       <div className="bg-zinc-950 text-white border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-emerald-600 text-white grid place-items-center font-black">
-              KM
+            <div className="w-11 h-11 rounded-full bg-white/10 border border-white/10 overflow-hidden grid place-items-center">
+              <img
+                src="/assets/brand/logo_kebunmerdesa-fotor-20260202235655.png"
+                alt="Logo Kebun Merdesa"
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="leading-tight">
-              <div className="font-black tracking-tight text-base">
-                Kebun<span className="text-emerald-400">Merdesa</span>
-              </div>
-              <div className="text-[11px] text-white/60 font-semibold -mt-0.5">
-                Coffee Roaster & Community Space
-              </div>
+              <img
+                src="/assets/brand/teks_kebunmerdesa.jpeg"
+                alt="Kebun Merdesa"
+                className="h-7 md:h-8 object-contain"
+              />
             </div>
           </Link>
 
@@ -171,3 +174,4 @@ export default function Navbar() {
     </header>
   );
 }
+

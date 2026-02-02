@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { api, formatIdr } from "../../api";
 import type { Product, Article } from "../../types";
 import { Link, useNavigate } from "react-router-dom";
@@ -121,15 +121,15 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-primarySoft/40">
-      <header className="bg-white/80 backdrop-blur border-b border-slate-200/70 sticky top-0 z-40">
+    <div className="min-h-screen bg-slate-50">
+      <header className="bg-white/90 backdrop-blur border-b border-slate-200/70 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-primary text-white grid place-items-center font-black shadow-sm">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white grid place-items-center font-black shadow-sm">
               KM
             </div>
             <div>
-              <div className="text-xs font-black uppercase tracking-widest text-primary">Admin</div>
+              <div className="text-xs font-black uppercase tracking-widest text-emerald-700">Admin</div>
               <div className="font-black text-dark">Dashboard Kebun Merdesa</div>
             </div>
           </div>
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
             </Link>
             <button
               onClick={logout}
-              className="px-4 py-2 rounded-xl bg-dark text-white font-black hover:bg-dark/90 transition"
+              className="px-4 py-2 rounded-xl bg-zinc-900 text-white font-black hover:bg-zinc-800 transition"
             >
               Logout
             </button>
@@ -151,10 +151,30 @@ export default function AdminDashboard() {
         </div>
       </header>
 
-      <section className="max-w-6xl mx-auto px-4 py-10">
-        <p className="text-slate-600 text-sm">
-          Kelola produk & artikel + upload gambar (maks 10MB). Pastikan backend sudah mengizinkan size upload.
-        </p>
+      <section className="max-w-6xl mx-auto px-4 py-8">
+        <div className="rounded-[2rem] border border-slate-200/70 bg-white p-6 md:p-8 shadow-sm">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-black">
+                Admin Workspace
+              </div>
+              <h1 className="mt-3 text-2xl md:text-3xl font-black text-dark">Kelola konten utama</h1>
+              <p className="mt-2 text-sm text-slate-600">
+                Tambah produk, update harga, dan publikasikan artikel baru untuk pelanggan.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 min-w-[240px]">
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                <div className="text-xs font-black uppercase tracking-widest text-slate-500">Produk</div>
+                <div className="text-2xl font-black text-dark">{products.length}</div>
+              </div>
+              <div className="rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3">
+                <div className="text-xs font-black uppercase tracking-widest text-slate-500">Artikel</div>
+                <div className="text-2xl font-black text-dark">{articles.length}</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {loading ? (
           <div className="text-slate-500 mt-8">Memuat...</div>
@@ -164,7 +184,7 @@ export default function AdminDashboard() {
             <div className="rounded-[2rem] border border-slate-200/70 bg-white p-6 shadow-sm">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <div className="text-xs font-black uppercase tracking-widest text-primary">Produk</div>
+                  <div className="text-xs font-black uppercase tracking-widest text-emerald-700">Produk</div>
                   <h2 className="font-black text-xl text-dark">Tambah Produk</h2>
                 </div>
                 <div className="text-xs font-bold text-slate-500">{products.length} item</div>
@@ -172,26 +192,26 @@ export default function AdminDashboard() {
 
               <div className="grid gap-3 mt-5">
                 <input
-                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary"
+                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Nama produk"
                   value={pName}
                   onChange={(e) => setPName(e.target.value)}
                 />
                 <input
-                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary"
+                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Kategori (misal: Kopi, Makanan, Merchandise)"
                   value={pCategory}
                   onChange={(e) => setPCategory(e.target.value)}
                 />
                 <input
-                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary"
+                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Harga (angka)"
                   type="number"
                   value={pPrice}
                   onChange={(e) => setPPrice(Number(e.target.value))}
                 />
                 <textarea
-                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary min-h-[110px]"
+                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600 min-h-[110px]"
                   placeholder="Deskripsi"
                   value={pDesc}
                   onChange={(e) => setPDesc(e.target.value)}
@@ -199,9 +219,7 @@ export default function AdminDashboard() {
 
                 <div className="grid md:grid-cols-2 gap-3 items-start">
                   <div>
-                    <label className="text-xs font-black text-slate-600 uppercase tracking-widest">
-                      Gambar Produk
-                    </label>
+                    <label className="text-xs font-black text-slate-600 uppercase tracking-widest">Gambar Produk</label>
                     <input
                       className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white"
                       type="file"
@@ -224,33 +242,46 @@ export default function AdminDashboard() {
 
                 <button
                   onClick={addProduct}
-                  className="px-4 py-3 rounded-2xl bg-primary text-white font-black hover:bg-primaryLight transition"
+                  className="px-4 py-3 rounded-2xl bg-emerald-600 text-white font-black shadow-sm hover:bg-emerald-700 transition"
                 >
-                  Simpan Produk
+                  + Tambah Produk
                 </button>
               </div>
 
-              <div className="mt-8 space-y-3">
-                {products.map((p) => (
-                  <div
-                    key={p.id}
-                    className="flex items-start justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200/70 hover:shadow-sm transition"
-                  >
-                    <div>
-                      <div className="font-black text-dark">{p.name}</div>
-                      <div className="text-sm text-slate-600">
-                        {p.category || "Menu"} • <span className="font-black text-coffee">{formatIdr(p.price || 0)}</span>
-                      </div>
-                    </div>
+              <div className="mt-8">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-black uppercase tracking-widest text-slate-500">Daftar Produk</div>
+                  <span className="text-xs font-semibold text-slate-400">{products.length} item</span>
+                </div>
 
-                    <button
-                      onClick={() => deleteProduct(p.id)}
-                      className="px-3 py-2 rounded-xl bg-red-600 text-white font-black hover:bg-red-700 transition"
-                    >
-                      Hapus
-                    </button>
+                {products.length === 0 ? (
+                  <div className="mt-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5 text-sm text-slate-500">
+                    Belum ada produk. Tambahkan produk pertama untuk tampil di website.
                   </div>
-                ))}
+                ) : (
+                  <div className="mt-3 space-y-3">
+                    {products.map((p) => (
+                      <div
+                        key={p.id}
+                        className="flex items-start justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200/70 hover:shadow-sm transition"
+                      >
+                        <div>
+                          <div className="font-black text-dark">{p.name}</div>
+                          <div className="text-sm text-slate-600">
+                            {p.category || "Menu"} - <span className="font-black text-emerald-700">{formatIdr(p.price || 0)}</span>
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => deleteProduct(p.id)}
+                          className="px-3 py-2 rounded-xl bg-red-600 text-white font-black hover:bg-red-700 transition"
+                        >
+                          Hapus
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -258,7 +289,7 @@ export default function AdminDashboard() {
             <div className="rounded-[2rem] border border-slate-200/70 bg-white p-6 shadow-sm">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <div className="text-xs font-black uppercase tracking-widest text-dark">Artikel</div>
+                  <div className="text-xs font-black uppercase tracking-widest text-slate-700">Artikel</div>
                   <h2 className="font-black text-xl text-dark">Tambah Artikel</h2>
                 </div>
                 <div className="text-xs font-bold text-slate-500">{articles.length} item</div>
@@ -266,19 +297,19 @@ export default function AdminDashboard() {
 
               <div className="grid gap-3 mt-5">
                 <input
-                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary"
+                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Judul artikel"
                   value={aTitle}
                   onChange={(e) => setATitle(e.target.value)}
                 />
                 <input
-                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary"
+                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Excerpt (ringkasan)"
                   value={aExcerpt}
                   onChange={(e) => setAExcerpt(e.target.value)}
                 />
                 <textarea
-                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary min-h-[160px]"
+                  className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600 min-h-[160px]"
                   placeholder="Konten (pakai enter untuk paragraf)"
                   value={aContent}
                   onChange={(e) => setAContent(e.target.value)}
@@ -286,16 +317,14 @@ export default function AdminDashboard() {
 
                 <div className="grid md:grid-cols-2 gap-3 items-start">
                   <div>
-                    <label className="text-xs font-black text-slate-600 uppercase tracking-widest">
-                      Cover Artikel
-                    </label>
+                    <label className="text-xs font-black text-slate-600 uppercase tracking-widest">Cover Artikel</label>
                     <input
                       className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white"
                       type="file"
                       accept="image/*"
                       onChange={(e) => setACover(e.target.files?.[0] || null)}
                     />
-                    <p className="text-xs text-slate-500 mt-2">Cover akan tampil di listing & detail artikel.</p>
+                    <p className="text-xs text-slate-500 mt-2">Cover akan tampil di listing dan slider banner.</p>
                   </div>
 
                   <div className="rounded-2xl border border-slate-200/70 bg-slate-50 overflow-hidden aspect-[16/10]">
@@ -311,31 +340,44 @@ export default function AdminDashboard() {
 
                 <button
                   onClick={addArticle}
-                  className="px-4 py-3 rounded-2xl bg-dark text-white font-black hover:bg-dark/90 transition"
+                  className="px-4 py-3 rounded-2xl bg-zinc-900 text-white font-black shadow-sm hover:bg-zinc-800 transition"
                 >
-                  Simpan Artikel
+                  + Tambah Artikel
                 </button>
               </div>
 
-              <div className="mt-8 space-y-3">
-                {articles.map((a) => (
-                  <div
-                    key={a.id}
-                    className="flex items-start justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200/70 hover:shadow-sm transition"
-                  >
-                    <div>
-                      <div className="font-black text-dark">{a.title}</div>
-                      <div className="text-xs text-slate-500 font-semibold">{a.slug}</div>
-                    </div>
+              <div className="mt-8">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-black uppercase tracking-widest text-slate-500">Daftar Artikel</div>
+                  <span className="text-xs font-semibold text-slate-400">{articles.length} item</span>
+                </div>
 
-                    <button
-                      onClick={() => deleteArticle(a.id)}
-                      className="px-3 py-2 rounded-xl bg-red-600 text-white font-black hover:bg-red-700 transition"
-                    >
-                      Hapus
-                    </button>
+                {articles.length === 0 ? (
+                  <div className="mt-3 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-5 text-sm text-slate-500">
+                    Belum ada artikel. Tulis artikel pertama untuk tampil di halaman artikel.
                   </div>
-                ))}
+                ) : (
+                  <div className="mt-3 space-y-3">
+                    {articles.map((a) => (
+                      <div
+                        key={a.id}
+                        className="flex items-start justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200/70 hover:shadow-sm transition"
+                      >
+                        <div>
+                          <div className="font-black text-dark">{a.title}</div>
+                          <div className="text-xs text-slate-500 font-semibold">{a.slug}</div>
+                        </div>
+
+                        <button
+                          onClick={() => deleteArticle(a.id)}
+                          className="px-3 py-2 rounded-xl bg-red-600 text-white font-black hover:bg-red-700 transition"
+                        >
+                          Hapus
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>

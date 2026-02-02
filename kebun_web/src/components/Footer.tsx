@@ -1,17 +1,28 @@
-export default function Footer() {
+﻿export default function Footer() {
   return (
     <footer className="bg-zinc-950 text-white mt-10">
       <div className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-4 gap-10">
         <div className="space-y-3">
-          <div className="font-black text-xl tracking-tight">
-            Kebun<span className="text-emerald-400">Merdesa</span>
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-white/10 border border-white/10 overflow-hidden grid place-items-center">
+              <img
+                src="/assets/brand/logo_kebunmerdesa-fotor-20260202235655.png"
+                alt="Logo Kebun Merdesa"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <img
+              src="/assets/brand/teks_kebunmerdesa.jpeg"
+              alt="Kebun Merdesa"
+              className="h-7 object-contain"
+            />
           </div>
           <p className="text-white/70 text-sm leading-relaxed">
-            Coffee roaster & collaborative space. Ruang belajar, diskusi, dan pengembangan komunitas—plus
+            Coffee roaster & collaborative space. Ruang belajar, diskusi, dan pengembangan komunitasâ€”plus
             artikel/opini kopi untuk memperkaya wawasan.
           </p>
           <div className="text-xs text-white/60 font-bold">
-            Open Daily • 09.00–23.00 🌿
+            Open Daily â€¢ 09.00â€“23.00 ðŸŒ¿
           </div>
         </div>
 
@@ -31,7 +42,7 @@ export default function Footer() {
           <div className="text-sm text-white/80 space-y-2">
             <div>WhatsApp: 62xxxxxxx</div>
             <div>Instagram: @kebunmerdesa</div>
-            <div>Alamat: (isi sesuai lokasi)</div>
+            <div>Alamat: Jl. Carang Pulang, Cikarawang, Kec. Dramaga, Kabupaten Bogor, Jawa Barat 16680</div>
           </div>
         </div>
 
@@ -39,7 +50,7 @@ export default function Footer() {
           <div className="text-xs font-black uppercase tracking-widest text-white/70">Catatan</div>
           <p className="text-white/70 text-sm leading-relaxed">
             Website local-first React + Laravel. Siap dikembangkan untuk deploy.  
-            Jika butuh halaman “premium/subscribe”, tinggal tambah route baru.
+            Jika butuh halaman â€œpremium/subscribeâ€, tinggal tambah route baru.
           </p>
           <a
             href="https://wa.me/628XXXXXXXXXX"
@@ -53,8 +64,9 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/60">
-        © {new Date().getFullYear()} Kebun Merdesa
+        Â© {new Date().getFullYear()} Kebun Merdesa
       </div>
     </footer>
   );
 }
+
