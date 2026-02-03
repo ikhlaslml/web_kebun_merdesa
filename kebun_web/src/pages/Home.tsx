@@ -1,6 +1,6 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { api, formatIdr, waLink } from "../api";
+import { api, asArray, formatIdr, waLink } from "../api";
 import type { Article, Product } from "../types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
@@ -18,9 +18,9 @@ export default function Home() {
     (async () => {
       try {
         const p = await api.get<Product[]>("/public/products");
-        setProducts(p.data || []);
+        setProducts(asArray<Product>(p.data));
         const a = await api.get<Article[]>("/public/articles");
-        setArticles(a.data || []);
+        setArticles(asArray<Article>(a.data));
       } catch (e) {
         console.error(e);
       }

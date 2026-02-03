@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { api } from "../api";
+import { api, asArray } from "../api";
 import type { Article } from "../types";
 
 function useQuery() {
@@ -19,7 +19,7 @@ export default function Articles() {
     (async () => {
       try {
         const res = await api.get<Article[]>("/public/articles");
-        setItems(res.data || []);
+        setItems(asArray<Article>(res.data));
       } finally {
         setLoading(false);
       }

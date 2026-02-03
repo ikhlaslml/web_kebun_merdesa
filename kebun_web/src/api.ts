@@ -31,6 +31,15 @@ export function formatIdr(value: number) {
   }).format(value);
 }
 
+export function asArray<T>(input: unknown): T[] {
+  if (Array.isArray(input)) return input;
+  if (input && typeof input === "object") {
+    const data = (input as { data?: unknown }).data;
+    if (Array.isArray(data)) return data as T[];
+  }
+  return [];
+}
+
 export function waLink(message: string) {
   const number = (import.meta.env.VITE_WA_NUMBER || "").trim();
   const base = number ? `https://wa.me/${number}` : "https://wa.me/";

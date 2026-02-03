@@ -1,5 +1,5 @@
 ﻿import { useEffect, useMemo, useState } from "react";
-import { api, formatIdr } from "../../api";
+import { api, asArray, formatIdr } from "../../api";
 import type { Product, Article } from "../../types";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -41,9 +41,9 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const p = await api.get<Product[]>("/admin/products");
-      setProducts(p.data || []);
+      setProducts(asArray<Product>(p.data));
       const a = await api.get<Article[]>("/admin/articles");
-      setArticles(a.data || []);
+      setArticles(asArray<Article>(a.data));
     } catch (e: any) {
       if (e?.response?.status === 401) {
         localStorage.removeItem("access_token");

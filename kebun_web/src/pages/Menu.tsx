@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { api, formatIdr, waLink } from "../api";
+import { api, asArray, formatIdr, waLink } from "../api";
 import type { Product } from "../types";
 
 export default function Menu() {
@@ -10,7 +10,7 @@ export default function Menu() {
     (async () => {
       try {
         const res = await api.get<Product[]>("/public/products");
-        setItems(res.data || []);
+        setItems(asArray<Product>(res.data));
       } finally {
         setLoading(false);
       }
