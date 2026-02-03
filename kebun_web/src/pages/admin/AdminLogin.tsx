@@ -4,8 +4,8 @@ import { api } from "../../api";
 
 export default function AdminLogin() {
   const nav = useNavigate();
-  const [email, setEmail] = useState("admin@kebunmerdesa.com");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
@@ -82,8 +82,12 @@ export default function AdminLogin() {
                 ) : null}
 
                 <div>
-                  <label className="text-xs font-black text-slate-600 uppercase tracking-widest">Email</label>
+                  <label htmlFor="admin-email" className="text-xs font-black text-slate-600 uppercase tracking-widest">
+                    Email
+                  </label>
                   <input
+                    id="admin-email"
+                    name="email"
                     className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -91,8 +95,12 @@ export default function AdminLogin() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-black text-slate-600 uppercase tracking-widest">Password</label>
+                  <label htmlFor="admin-password" className="text-xs font-black text-slate-600 uppercase tracking-widest">
+                    Password
+                  </label>
                   <input
+                    id="admin-password"
+                    name="password"
                     type="password"
                     className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                     value={password}
