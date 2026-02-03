@@ -28,4 +28,4 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["sh", "-c", "php -S 0.0.0.0:${PORT} -t public"]
+CMD ["sh", "-c", "php artisan migrate --force && php -S 0.0.0.0:${PORT} -t public"]
