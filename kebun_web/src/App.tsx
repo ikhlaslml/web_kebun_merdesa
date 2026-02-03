@@ -12,7 +12,9 @@ import Contact from "./pages/Contact";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
-function RequireAuth({ children }: { children: JSX.Element }) {
+import type { ReactElement } from "react";
+
+function RequireAuth({ children }: { children: ReactElement }) {
   const token = localStorage.getItem("access_token") || localStorage.getItem("token");
   if (!token) return <Navigate to="/admin/login" replace />;
   return children;
