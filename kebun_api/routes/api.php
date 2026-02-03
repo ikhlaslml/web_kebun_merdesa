@@ -8,6 +8,10 @@ use App\Http\Controllers\Public\ArticleController as PublicArticleController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 
+Route::options('{any}', function () {
+    return response()->noContent();
+})->where('any', '.*');
+
 Route::get('/health', function () {
     return response()->json(['status' => 'ok']);
 });
