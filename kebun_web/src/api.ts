@@ -1,10 +1,15 @@
 import axios from "axios";
 
 const RAW_API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-const CLEAN_API_URL = RAW_API_URL.replace(/\/+$/, "");
+let CLEAN_API_URL = RAW_API_URL.replace(/\/+$/, "");
 
-export const ORIGIN = CLEAN_API_URL.endsWith("/api") ? CLEAN_API_URL.slice(0, -4) : CLEAN_API_URL;
-const API_BASE_URL = CLEAN_API_URL.endsWith("/api") ? CLEAN_API_URL : `${CLEAN_API_URL}/api`;
+// Normalize to avoid accidental /api/api from env value
+while (CLEAN_API_URL.endsWith("/api")) {
+  CLEAN_API_URL = CLEAN_API_URL.slice(0, -4);
+}
+
+export const ORIGIN = CLEAN_API_URL;
+const API_BASE_URL = `${CLEAN_API_URL}/api`;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
