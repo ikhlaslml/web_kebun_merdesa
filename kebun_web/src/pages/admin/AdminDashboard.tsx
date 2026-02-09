@@ -1,5 +1,5 @@
 ﻿import { useEffect, useMemo, useState } from "react";
-import { api, asArray, formatIdr } from "../../api";
+import { api, asArray, formatIdr, ORIGIN } from "../../api";
 import type { Product, Article } from "../../types";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -14,6 +14,7 @@ export default function AdminDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // form product
   const [pName, setPName] = useState("");
@@ -39,6 +40,7 @@ export default function AdminDashboard() {
     }
 
     setLoading(true);
+    setError(null);
     try {
       const p = await api.get<Product[]>("/admin/products");
       setProducts(asArray<Product>(p.data));
@@ -48,6 +50,10 @@ export default function AdminDashboard() {
       if (e?.response?.status === 401) {
         localStorage.removeItem("access_token");
         nav("/admin/login");
+      } else if (!e?.response) {
+        setError(`API tidak bisa diakses. Cek VITE_API_URL. Base URL saat ini: ${ORIGIN}`);
+      } else {
+        setError(e?.response?.data?.message || "Gagal memuat data admin");
       }
       console.error(e);
     } finally {
@@ -120,6 +126,8 @@ export default function AdminDashboard() {
     await loadAll();
   };
 
+  const actionsDisabled = loading || !!error;
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/90 backdrop-blur border-b border-slate-200/70 sticky top-0 z-40">
@@ -152,6 +160,11 @@ export default function AdminDashboard() {
       </header>
 
       <section className="max-w-6xl mx-auto px-4 py-8">
+        {error ? (
+          <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-900 text-sm font-semibold">
+            {error}
+          </div>
+        ) : null}
         <div className="rounded-[2rem] border border-slate-200/70 bg-white p-6 md:p-8 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
@@ -195,12 +208,14 @@ export default function AdminDashboard() {
                   className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Nama produk"
                   value={pName}
+                  disabled={actionsDisabled}
                   onChange={(e) => setPName(e.target.value)}
                 />
                 <input
                   className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Kategori (misal: Kopi, Makanan, Merchandise)"
                   value={pCategory}
+                  disabled={actionsDisabled}
                   onChange={(e) => setPCategory(e.target.value)}
                 />
                 <input
@@ -208,12 +223,14 @@ export default function AdminDashboard() {
                   placeholder="Harga (angka)"
                   type="number"
                   value={pPrice}
+                  disabled={actionsDisabled}
                   onChange={(e) => setPPrice(Number(e.target.value))}
                 />
                 <textarea
                   className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600 min-h-[110px]"
                   placeholder="Deskripsi"
                   value={pDesc}
+                  disabled={actionsDisabled}
                   onChange={(e) => setPDesc(e.target.value)}
                 />
 
@@ -224,6 +241,7 @@ export default function AdminDashboard() {
                       className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white"
                       type="file"
                       accept="image/*"
+                      disabled={actionsDisabled}
                       onChange={(e) => setPImage(e.target.files?.[0] || null)}
                     />
                     <p className="text-xs text-slate-500 mt-2">Disarankan 1200px lebar, JPG/PNG.</p>
@@ -242,6 +260,7 @@ export default function AdminDashboard() {
 
                 <button
                   onClick={addProduct}
+                  disabled={actionsDisabled}
                   className="px-4 py-3 rounded-2xl bg-emerald-600 text-white font-black shadow-sm hover:bg-emerald-700 transition"
                 >
                   + Tambah Produk
@@ -274,6 +293,7 @@ export default function AdminDashboard() {
 
                         <button
                           onClick={() => deleteProduct(p.id)}
+                          disabled={actionsDisabled}
                           className="px-3 py-2 rounded-xl bg-red-600 text-white font-black hover:bg-red-700 transition"
                         >
                           Hapus
@@ -300,18 +320,21 @@ export default function AdminDashboard() {
                   className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Judul artikel"
                   value={aTitle}
+                  disabled={actionsDisabled}
                   onChange={(e) => setATitle(e.target.value)}
                 />
                 <input
                   className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                   placeholder="Excerpt (ringkasan)"
                   value={aExcerpt}
+                  disabled={actionsDisabled}
                   onChange={(e) => setAExcerpt(e.target.value)}
                 />
                 <textarea
                   className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600 min-h-[160px]"
                   placeholder="Konten (pakai enter untuk paragraf)"
                   value={aContent}
+                  disabled={actionsDisabled}
                   onChange={(e) => setAContent(e.target.value)}
                 />
 
@@ -322,6 +345,7 @@ export default function AdminDashboard() {
                       className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white"
                       type="file"
                       accept="image/*"
+                      disabled={actionsDisabled}
                       onChange={(e) => setACover(e.target.files?.[0] || null)}
                     />
                     <p className="text-xs text-slate-500 mt-2">Cover akan tampil di listing dan slider banner.</p>
@@ -340,6 +364,7 @@ export default function AdminDashboard() {
 
                 <button
                   onClick={addArticle}
+                  disabled={actionsDisabled}
                   className="px-4 py-3 rounded-2xl bg-zinc-900 text-white font-black shadow-sm hover:bg-zinc-800 transition"
                 >
                   + Tambah Artikel
@@ -370,6 +395,7 @@ export default function AdminDashboard() {
 
                         <button
                           onClick={() => deleteArticle(a.id)}
+                          disabled={actionsDisabled}
                           className="px-3 py-2 rounded-xl bg-red-600 text-white font-black hover:bg-red-700 transition"
                         >
                           Hapus

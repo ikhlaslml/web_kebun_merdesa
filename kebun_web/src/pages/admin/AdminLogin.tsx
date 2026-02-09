@@ -1,6 +1,6 @@
-﻿import { useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { api } from "../../api";
+import { api, ORIGIN } from "../../api";
 
 export default function AdminLogin() {
   const nav = useNavigate();
@@ -8,6 +8,30 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [apiStatus, setApiStatus] = useState<"checking" | "ready" | "down">("checking");
+  const [apiHint, setApiHint] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    api
+      .get("/health")
+      .then(() => {
+        if (!alive) return;
+        setApiStatus("ready");
+        setApiHint(null);
+      })
+      .catch(() => {
+        if (!alive) return;
+        setApiStatus("down");
+        setApiHint(
+          `API belum terhubung. Pastikan backend + database aktif dan set VITE_API_URL di Vercel. Base URL saat ini: ${ORIGIN}`
+        );
+      });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +44,11 @@ export default function AdminLogin() {
       if (token) localStorage.setItem("access_token", token);
       nav("/admin");
     } catch (e: any) {
-      setErr(e?.response?.data?.message || "Login gagal");
+      if (!e?.response) {
+        setErr(`API tidak bisa diakses. Cek VITE_API_URL. Base URL saat ini: ${ORIGIN}`);
+      } else {
+        setErr(e?.response?.data?.message || "Login gagal");
+      }
     } finally {
       setLoading(false);
     }
@@ -75,6 +103,12 @@ export default function AdminLogin() {
               </p>
 
               <form onSubmit={submit} className="mt-6 space-y-4">
+                {apiStatus === "down" && apiHint ? (
+                  <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 text-sm font-semibold">
+                    {apiHint}
+                  </div>
+                ) : null}
+
                 {err ? (
                   <div className="p-3 rounded-2xl bg-red-50 border border-red-100 text-red-700 text-sm font-semibold">
                     {err}
@@ -90,6 +124,7 @@ export default function AdminLogin() {
                     name="email"
                     className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                     value={email}
+                    disabled={loading || apiStatus === "down"}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -104,13 +139,14 @@ export default function AdminLogin() {
                     type="password"
                     className="mt-1 w-full px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-4 focus:ring-emerald-200 focus:border-emerald-600"
                     value={password}
+                    disabled={loading || apiStatus === "down"}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || apiStatus === "down"}
                   className="w-full px-4 py-3 rounded-2xl bg-emerald-600 text-white font-black shadow-sm hover:bg-emerald-700 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {loading ? "Login..." : "Login"}
