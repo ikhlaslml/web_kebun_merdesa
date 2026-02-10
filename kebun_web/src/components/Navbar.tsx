@@ -27,17 +27,10 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50">
-      {/* top bar */}
-      <div className="bg-zinc-950 text-white border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <Link to="/" className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-white/10 border border-white/10 overflow-hidden grid place-items-center">
-              <img
-                src="/assets/brand/logo_kebunmerdesa-fotor-20260202235655.png"
-                alt="Logo Kebun Merdesa"
-                className="w-full h-full object-cover"
-              />
-            </div>
+      {/* header */}
+      <div className="bg-emerald-600/70 text-white border-b border-white/20 backdrop-blur-md shadow-[0_10px_30px_rgba(5,46,22,0.18)]">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
+          <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="leading-tight">
               <img
                 src="/assets/brand/teks_kebunmerdesa.jpeg"
@@ -47,42 +40,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          <div className="flex items-center gap-2">
-            {/* desktop search */}
-            <form onSubmit={onSubmit} className="hidden md:flex items-center">
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Cari artikel kopi..."
-                className="w-64 bg-white/10 border border-white/10 rounded-xl px-3 py-2 text-sm outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-400"
-              />
-              <button className="ml-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 font-black text-sm">
-                Cari
-              </button>
-            </form>
-
-            <Link
-              to="/admin/login"
-              className="hidden md:inline-flex px-4 py-2 rounded-xl bg-white/10 border border-white/10 hover:bg-white/15 font-black text-sm"
-            >
-              Masuk
-            </Link>
-
-            {/* mobile button */}
-            <button
-              onClick={() => setOpen((v) => !v)}
-              className="md:hidden px-3 py-2 rounded-xl bg-white/10 border border-white/10 font-black text-sm"
-            >
-              Menu
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* nav bar */}
-      <div className="bg-white border-b border-slate-200/70">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <nav className="hidden md:flex items-center gap-6 text-sm font-black text-slate-700">
+          <nav className="hidden md:flex flex-1 items-center justify-center gap-6 text-sm font-black text-white/95">
             {NAV.map((it) => {
               const isActive =
                 it.to === "/"
@@ -95,8 +53,8 @@ export default function Navbar() {
                   to={it.to}
                   className={
                     isActive
-                      ? "text-emerald-700"
-                      : "hover:text-emerald-700"
+                      ? "text-white border-b-2 border-white pb-1"
+                      : "hover:text-white"
                   }
                 >
                   {it.label}
@@ -105,72 +63,80 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 shrink-0">
+            {/* desktop search */}
+            <form onSubmit={onSubmit} className="hidden md:flex items-center">
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Cari artikel kopi..."
+                className="w-64 bg-white/95 text-slate-900 border border-white/80 rounded-xl px-3 py-2 text-sm outline-none placeholder:text-slate-500 focus:ring-4 focus:ring-white/40 focus:border-white"
+              />
+              <button className="ml-2 px-4 py-2 rounded-xl bg-white text-slate-900 border border-white/70 hover:bg-white/90 font-black text-sm">
+                Cari
+              </button>
+            </form>
+
+            <a
+              href="https://wa.me/628XXXXXXXXXX"
+              target="_blank"
+              rel="noreferrer"
+              className="hidden md:inline-flex px-4 py-2 rounded-xl bg-emerald-950 text-white font-black text-sm hover:bg-emerald-900"
+            >
+              Pesan via WhatsApp
+            </a>
+
+            {/* mobile button */}
             <button
               onClick={() => setOpen((v) => !v)}
-              className="px-4 py-2 rounded-xl border border-slate-200 bg-white font-black text-sm"
+              className="md:hidden px-3 py-2 rounded-xl bg-white/15 border border-white/20 font-black text-sm"
             >
-              Navigasi
+              Menu
             </button>
-            <Link
-              to="/admin/login"
-              className="px-4 py-2 rounded-xl bg-zinc-950 text-white font-black text-sm"
-            >
-              Masuk
-            </Link>
           </div>
-
-          <a
-            href="https://wa.me/628XXXXXXXXXX"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden md:inline-flex px-4 py-2 rounded-xl bg-zinc-950 text-white font-black text-sm hover:bg-zinc-900"
-          >
-            Pesan via WhatsApp
-          </a>
         </div>
-
-        {/* mobile drawer */}
-        {open && (
-          <div className="md:hidden border-t border-slate-200 bg-white">
-            <div className="max-w-7xl mx-auto px-4 py-4 space-y-3">
-              <form onSubmit={onSubmit} className="flex gap-2">
-                <input
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="Cari artikel kopi..."
-                  className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600"
-                />
-                <button className="px-4 py-2 rounded-xl bg-emerald-600 text-white font-black text-sm">
-                  Cari
-                </button>
-              </form>
-
-              <div className="grid gap-2">
-                {NAV.map((it) => (
-                  <Link
-                    key={it.to}
-                    to={it.to}
-                    onClick={() => setOpen(false)}
-                    className="px-4 py-3 rounded-xl border border-slate-200 bg-white font-black text-sm text-slate-800 hover:bg-slate-50"
-                  >
-                    {it.label}
-                  </Link>
-                ))}
-              </div>
-
-              <a
-                href="https://wa.me/628XXXXXXXXXX"
-                target="_blank"
-                rel="noreferrer"
-                className="block text-center px-4 py-3 rounded-xl bg-zinc-950 text-white font-black text-sm"
-              >
-                Pesan via WhatsApp
-              </a>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* mobile drawer */}
+      {open && (
+        <div className="md:hidden border-t border-emerald-800/40 bg-white">
+          <div className="max-w-7xl mx-auto px-4 py-4 space-y-3">
+            <form onSubmit={onSubmit} className="flex gap-2">
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Cari artikel kopi..."
+                className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600"
+              />
+              <button className="px-4 py-2 rounded-xl bg-white text-slate-900 border border-slate-200 font-black text-sm">
+                Cari
+              </button>
+            </form>
+
+            <div className="grid gap-2">
+              {NAV.map((it) => (
+                <Link
+                  key={it.to}
+                  to={it.to}
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-3 rounded-xl border border-slate-200 bg-white font-black text-sm text-slate-800 hover:bg-slate-50"
+                >
+                  {it.label}
+                </Link>
+              ))}
+            </div>
+
+            <a
+              href="https://wa.me/628XXXXXXXXXX"
+              target="_blank"
+              rel="noreferrer"
+              className="block text-center px-4 py-3 rounded-xl bg-emerald-950 text-white font-black text-sm"
+            >
+              Pesan via WhatsApp
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
