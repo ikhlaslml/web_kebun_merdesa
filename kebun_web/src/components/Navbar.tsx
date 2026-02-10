@@ -33,14 +33,14 @@ export default function Navbar() {
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="leading-tight">
               <img
-                src="/assets/brand/teks_kebunmerdesa.jpeg"
+                src="/assets/brand/teks_kebunmerdesa.png"
                 alt="Kebun Merdesa"
                 className="h-7 md:h-8 object-contain"
               />
             </div>
           </Link>
 
-          <nav className="hidden md:flex flex-1 items-center justify-center gap-6 text-sm font-black text-white/95">
+          <nav className="hidden md:flex flex-1 items-center justify-center gap-7 text-[13px] font-semibold tracking-wide text-white/95">
             {NAV.map((it) => {
               const isActive =
                 it.to === "/"
@@ -53,8 +53,8 @@ export default function Navbar() {
                   to={it.to}
                   className={
                     isActive
-                      ? "text-white border-b-2 border-white pb-1"
-                      : "hover:text-white"
+                      ? "text-white border-b-2 border-white/80 pb-1"
+                      : "text-white/90 hover:text-white"
                   }
                 >
                   {it.label}
@@ -70,9 +70,9 @@ export default function Navbar() {
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Cari artikel kopi..."
-                className="w-64 bg-white/95 text-slate-900 border border-white/80 rounded-xl px-3 py-2 text-sm outline-none placeholder:text-slate-500 focus:ring-4 focus:ring-white/40 focus:border-white"
+                className="w-64 bg-white/95 text-slate-900 border border-white/80 rounded-xl px-3.5 py-2 text-[13px] font-medium outline-none placeholder:text-slate-500 focus:ring-4 focus:ring-white/40 focus:border-white"
               />
-              <button className="ml-2 px-4 py-2 rounded-xl bg-white text-slate-900 border border-white/70 hover:bg-white/90 font-black text-sm">
+              <button className="ml-2 px-4 py-2 rounded-xl bg-white text-slate-900 border border-white/70 hover:bg-white/90 font-semibold text-[13px]">
                 Cari
               </button>
             </form>
@@ -81,7 +81,7 @@ export default function Navbar() {
               href="https://wa.me/628XXXXXXXXXX"
               target="_blank"
               rel="noreferrer"
-              className="hidden md:inline-flex px-4 py-2 rounded-xl bg-emerald-950 text-white font-black text-sm hover:bg-emerald-900"
+              className="hidden md:inline-flex px-4 py-2 rounded-xl bg-emerald-950 text-white font-semibold text-[13px] hover:bg-emerald-900"
             >
               Pesan via WhatsApp
             </a>
@@ -89,7 +89,7 @@ export default function Navbar() {
             {/* mobile button */}
             <button
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden px-3 py-2 rounded-xl bg-white/15 border border-white/20 font-black text-sm"
+              className="md:hidden px-3 py-2 rounded-xl bg-white/15 border border-white/20 font-semibold text-[13px]"
             >
               Menu
             </button>
@@ -108,7 +108,7 @@ export default function Navbar() {
                 placeholder="Cari artikel kopi..."
                 className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600"
               />
-              <button className="px-4 py-2 rounded-xl bg-white text-slate-900 border border-slate-200 font-black text-sm">
+              <button className="px-4 py-2 rounded-xl bg-white text-slate-900 border border-slate-200 font-semibold text-[13px]">
                 Cari
               </button>
             </form>
@@ -119,7 +119,7 @@ export default function Navbar() {
                   key={it.to}
                   to={it.to}
                   onClick={() => setOpen(false)}
-                  className="px-4 py-3 rounded-xl border border-slate-200 bg-white font-black text-sm text-slate-800 hover:bg-slate-50"
+                  className="px-4 py-3 rounded-xl border border-slate-200 bg-white font-semibold text-[13px] text-slate-800 hover:bg-slate-50"
                 >
                   {it.label}
                 </Link>
@@ -130,7 +130,7 @@ export default function Navbar() {
               href="https://wa.me/628XXXXXXXXXX"
               target="_blank"
               rel="noreferrer"
-              className="block text-center px-4 py-3 rounded-xl bg-emerald-950 text-white font-black text-sm"
+              className="block text-center px-4 py-3 rounded-xl bg-emerald-950 text-white font-semibold text-[13px]"
             >
               Pesan via WhatsApp
             </a>
