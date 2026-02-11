@@ -4,6 +4,7 @@ import { api, asArray, formatIdr, waLink } from "../api";
 import type { Article, Product } from "../types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
+import SmartImage from "../components/SmartImage";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
@@ -88,8 +89,9 @@ export default function Home() {
               return (
                 <SwiperSlide key={b.id || idx}>
                   <div className="relative h-full w-full">
-                    <img
+                    <SmartImage
                       src={b.cover_image_url || heroCoverFallback}
+                      fallbackSrc="/assets/brand/gambar6.jpeg"
                       alt={title}
                       className="h-full w-full object-cover"
                     />
@@ -274,9 +276,13 @@ export default function Home() {
                 {featuredProducts.slice(0, 3).map((p) => (
                   <div key={p.id} className="flex items-start gap-3">
                     <div className="w-14 h-14 rounded-2xl bg-slate-100 overflow-hidden border border-slate-200/70">
-                      {p.image_url ? (
-                        <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
-                      ) : null}
+                      <SmartImage
+                        src={p.image_url}
+                        fallbackSrc="/assets/brand/gambar6.jpeg"
+                        alt={p.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
                     <div className="flex-1 leading-tight">
                       <div className="font-black text-slate-900">{p.name}</div>
@@ -323,9 +329,13 @@ export default function Home() {
                   className="group grid md:grid-cols-[180px_1fr] gap-5 py-5"
                 >
                   <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/70 aspect-[16/10]">
-                    {a.cover_image_url ? (
-                      <img src={a.cover_image_url} alt={a.title} className="w-full h-full object-cover group-hover:scale-[1.02] transition" />
-                    ) : null}
+                    <SmartImage
+                      src={a.cover_image_url}
+                      fallbackSrc="/assets/brand/gambar6.jpeg"
+                      alt={a.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.02] transition"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="space-y-2">
                     <div className="text-xs font-black uppercase tracking-widest text-emerald-700">
@@ -462,5 +472,11 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+
+
 
 

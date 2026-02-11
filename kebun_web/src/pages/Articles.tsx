@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { api, asArray } from "../api";
 import type { Article } from "../types";
+import SmartImage from "../components/SmartImage";
 
 function useQuery() {
   const loc = useLocation();
@@ -67,13 +68,13 @@ export default function Articles() {
                   className="group grid md:grid-cols-[200px_1fr] gap-5 py-5"
                 >
                   <div className="rounded-2xl overflow-hidden bg-slate-100 border border-slate-200/70 aspect-[16/10]">
-                    {a.cover_image_url ? (
-                      <img
-                        src={a.cover_image_url}
-                        alt={a.title}
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition"
-                      />
-                    ) : null}
+                    <SmartImage
+                      src={a.cover_image_url}
+                      fallbackSrc="/assets/brand/gambar6.jpeg"
+                      alt={a.title}
+                      className="w-full h-full object-cover group-hover:scale-[1.02] transition"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="space-y-2">
                     <div className="text-xs font-black uppercase tracking-widest text-emerald-700">

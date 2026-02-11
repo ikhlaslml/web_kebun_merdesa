@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, asArray, formatIdr, waLink } from "../api";
 import type { Product } from "../types";
+import SmartImage from "../components/SmartImage";
 
 export default function Menu() {
   const [items, setItems] = useState<Product[]>([]);
@@ -56,13 +57,13 @@ export default function Menu() {
                 {list.map((p) => (
                   <div key={p.id} className="rounded-3xl border border-slate-200/70 bg-white shadow-sm overflow-hidden">
                     <div className="aspect-[16/10] bg-slate-100 border-b border-slate-200/70">
-                      {p.image_url ? (
-                        <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full grid place-items-center text-slate-400 font-black">
-                          No Image
-                        </div>
-                      )}
+                      <SmartImage
+                        src={p.image_url}
+                        fallbackSrc="/assets/brand/gambar6.jpeg"
+                        alt={p.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
 
                     <div className="p-5">

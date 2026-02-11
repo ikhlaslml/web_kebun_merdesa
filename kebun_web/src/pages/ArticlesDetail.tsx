@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { api, waLink } from "../api";
 import type { Article } from "../types";
+import SmartImage from "../components/SmartImage";
 
 export default function ArticleDetail() {
   const { slug } = useParams();
@@ -35,7 +36,12 @@ export default function ArticleDetail() {
       {/* hero */}
       <section className="relative">
         <div className="h-[42vh] md:h-[52vh] w-full overflow-hidden">
-          <img src={cover} alt={item.title} className="w-full h-full object-cover" />
+          <SmartImage
+            src={cover}
+            fallbackSrc="/assets/brand/gambar6.jpeg"
+            alt={item.title}
+            className="w-full h-full object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent" />
         </div>
 
