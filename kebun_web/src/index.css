@@ -21,10 +21,10 @@ body {
   font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
   background-color: #f7f8f3;
   background-image:
-    linear-gradient(rgba(247, 248, 243, 0.95), rgba(247, 248, 243, 0.95)),
+    linear-gradient(rgba(247, 248, 243, 0.88), rgba(247, 248, 243, 0.88)),
     url("/assets/background/latarbelakang_kopi.jpg");
   background-repeat: no-repeat, repeat;
-  background-size: auto, 920px 920px;
+  background-size: auto, 540px 540px;
   background-position: center top, top left;
 }
 
