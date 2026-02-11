@@ -31,6 +31,7 @@ class Article extends Model
             return $this->cover_image_path;
         }
 
-        return asset('storage/' . ltrim($this->cover_image_path, '/'));
+        $segments = array_map('rawurlencode', explode('/', ltrim($this->cover_image_path, '/')));
+        return url('/api/public/media/' . implode('/', $segments));
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Public\ProductController as PublicProductController;
 use App\Http\Controllers\Public\ArticleController as PublicArticleController;
 use App\Http\Controllers\Public\ChannelController as PublicChannelController;
+use App\Http\Controllers\Public\MediaController as PublicMediaController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\ChannelController as AdminChannelController;
@@ -19,6 +20,7 @@ Route::get('/health', function () {
 });
 
 Route::prefix('public')->group(function () {
+    Route::get('/media/{path}', [PublicMediaController::class, 'show'])->where('path', '.*');
     Route::get('/products', [PublicProductController::class, 'index']);
     Route::get('/articles', [PublicArticleController::class, 'index']);
     Route::get('/articles/{slug}', [PublicArticleController::class, 'show']);

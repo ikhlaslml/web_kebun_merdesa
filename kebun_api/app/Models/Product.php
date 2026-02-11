@@ -31,6 +31,7 @@ class Product extends Model
             return $this->image_path;
         }
 
-        return asset('storage/' . ltrim($this->image_path, '/'));
+        $segments = array_map('rawurlencode', explode('/', ltrim($this->image_path, '/')));
+        return url('/api/public/media/' . implode('/', $segments));
     }
 }
