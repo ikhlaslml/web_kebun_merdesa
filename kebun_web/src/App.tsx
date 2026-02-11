@@ -23,12 +23,13 @@ function RequireAuth({ children }: { children: ReactElement }) {
 export default function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isHomeRoute = location.pathname === "/";
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-dark">
       {!isAdminRoute && <Navbar />}
 
-      <main className="flex-1">
+      <main className={`flex-1 ${!isAdminRoute && !isHomeRoute ? "pt-24 md:pt-28" : ""}`}>
         <Routes>
           {/* Public */}
           <Route path="/" element={<Home />} />

@@ -4,6 +4,7 @@
 /* Base styling biar enak dilihat */
 :root {
   color-scheme: light;
+  --ui-radius-control: 18px;
 }
 
 html,
@@ -19,6 +20,11 @@ body {
 /* Permintaan UI: semua teks berbobot tebal diratakan ke regular */
 :where(.font-black, .font-extrabold, .font-bold, .font-semibold, .font-medium) {
   font-weight: 400 !important;
+}
+
+/* Samakan radius tombol di seluruh website */
+:where(button, input[type="button"], input[type="submit"], a[class*="px-"][class*="py-"]) {
+  border-radius: var(--ui-radius-control) !important;
 }
 
 .hero-swiper .swiper-pagination {
