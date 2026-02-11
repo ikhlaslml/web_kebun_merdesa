@@ -32,6 +32,42 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+function shouldUpgradeToHttps() {
+  if (typeof window === "undefined") return false;
+  return window.location.protocol === "https:";
+}
+
+function upgradeHttpUrl(value: string) {
+  if (!shouldUpgradeToHttps()) return value;
+  if (!value.startsWith("http://")) return value;
+  return `https://${value.slice("http://".length)}`;
+}
+
+function normalizePayloadUrls<T>(payload: T): T {
+  if (typeof payload === "string") {
+    return upgradeHttpUrl(payload) as T;
+  }
+
+  if (Array.isArray(payload)) {
+    return payload.map((item) => normalizePayloadUrls(item)) as T;
+  }
+
+  if (payload && typeof payload === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(payload as Record<string, unknown>)) {
+      out[key] = normalizePayloadUrls(val);
+    }
+    return out as T;
+  }
+
+  return payload;
+}
+
+api.interceptors.response.use((response) => {
+  response.data = normalizePayloadUrls(response.data);
+  return response;
+});
+
 export function formatIdr(value: number) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
