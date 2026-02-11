@@ -207,7 +207,7 @@ export default function Home() {
               <div className="p-4 text-sm text-slate-600 leading-relaxed">
                 Tulisan pendek tentang roasting, seduh, dan budaya kopi - bahasannya ringan.
                 <Link to="/articles" className="block mt-3 font-black text-emerald-700 hover:underline">
-                  Selengkapnya
+                  Selengkapnya &rarr;
                 </Link>
               </div>
             </div>
@@ -312,7 +312,7 @@ export default function Home() {
                   to="/menu"
                   className="inline-flex w-full justify-center px-4 py-3 rounded-2xl bg-emerald-600 text-white font-black text-sm hover:bg-emerald-700"
                 >
-                  Lihat Semua Produk
+                  Lihat Semua Produk &rarr;
                 </Link>
               </div>
             </div>
@@ -333,7 +333,7 @@ export default function Home() {
                 </h2>
               </div>
               <Link to="/articles" className="text-sm font-black text-emerald-700 hover:underline">
-                Lihat semua
+                Lihat semua &rarr;
               </Link>
             </div>
 
@@ -363,7 +363,7 @@ export default function Home() {
                     <div className="text-sm text-slate-600 leading-relaxed">
                       {a.excerpt || "Bacaan ringan seputar kopi, roasting, seduh, dan budaya komunitas."}
                     </div>
-                    <div className="text-sm font-black text-slate-900">Baca</div>
+                    <div className="text-sm font-black text-slate-900">Baca &rarr;</div>
                   </div>
                 </Link>
               ))}
@@ -449,7 +449,7 @@ export default function Home() {
               href="#"
               className="text-sm font-black text-white/80 hover:text-white hover:underline"
             >
-              Lainnya
+              Lainnya &rarr;
             </a>
           </div>
 
@@ -490,6 +490,8 @@ export default function Home() {
     </div>
   );
 }
+
+
 
 
 

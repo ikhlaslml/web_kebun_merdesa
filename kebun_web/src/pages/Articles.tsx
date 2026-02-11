@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { api, asArray } from "../api";
 import type { Article } from "../types";
@@ -51,7 +51,7 @@ export default function Articles() {
               </p>
               {search ? (
                 <p className="text-sm mt-2 font-black text-emerald-700">
-                  Hasil pencarian: “{search}”
+                  Hasil pencarian: â€œ{search}â€
                 </p>
               ) : null}
             </div>
@@ -86,7 +86,7 @@ export default function Articles() {
                     <div className="text-sm text-slate-600 leading-relaxed">
                       {a.excerpt || "Bacaan ringan seputar kopi dan komunitas."}
                     </div>
-                    <div className="text-sm font-black text-slate-900">Baca →</div>
+                    <div className="text-sm font-black text-slate-900">Baca &rarr;</div>
                   </div>
                 </Link>
               ))}
@@ -138,3 +138,6 @@ export default function Articles() {
     </section>
   );
 }
+
+
+
