@@ -58,7 +58,7 @@ export default function Home() {
     <div className="bg-white">
       {/* HERO CAROUSEL (artikel menjadi banner) */}
       <section className="relative">
-        <div className="h-[56vh] md:h-[70vh] w-full overflow-hidden relative">
+        <div className="h-[400px] md:h-[520px] w-full overflow-hidden relative">
           <Swiper
             className="hero-swiper h-full"
             modules={[Autoplay, EffectFade, Pagination, Navigation]}
