@@ -26,7 +26,7 @@ export default function App() {
   const isHomeRoute = location.pathname === "/";
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-dark">
+    <div className="min-h-screen flex flex-col bg-transparent text-dark">
       {!isAdminRoute && <Navbar />}
 
       <main className={`flex-1 ${!isAdminRoute && !isHomeRoute ? "pt-24 md:pt-28" : ""}`}>
@@ -58,3 +58,4 @@ export default function App() {
     </div>
   );
 }
+

@@ -4,7 +4,7 @@ export default function Contact() {
   const mapsUrl = import.meta.env.VITE_MAPS_URL || "https://g.co/kgs/ttHN2G";
 
   return (
-    <div className="bg-white">
+    <div className="bg-transparent">
       <section className="max-w-5xl mx-auto px-4 py-12">
         <div className="text-dark text-xs font-black uppercase tracking-widest">Kontak</div>
         <h1 className="text-3xl md:text-4xl font-black tracking-tight mt-2 text-dark">
@@ -59,3 +59,4 @@ export default function Contact() {
     </div>
   );
 }
+

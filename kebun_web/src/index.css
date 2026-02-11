@@ -21,10 +21,11 @@ body {
   font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
   background-color: #f7f8f3;
   background-image:
-    linear-gradient(rgba(247, 248, 243, 0.9), rgba(247, 248, 243, 0.9)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%236b4a34' stroke-opacity='0.22' stroke-width='2.2'%3E%3Cellipse cx='38' cy='44' rx='14' ry='9' transform='rotate(-24 38 44)'/%3E%3Cpath d='M34 38c2 4 2 8 0 12' stroke-linecap='round'/%3E%3Cellipse cx='106' cy='36' rx='13' ry='8' transform='rotate(18 106 36)'/%3E%3Cpath d='M102 31c2 4 2 8 0 11' stroke-linecap='round'/%3E%3Cellipse cx='176' cy='52' rx='14' ry='9' transform='rotate(-16 176 52)'/%3E%3Cpath d='M172 46c2 4 2 8 0 12' stroke-linecap='round'/%3E%3Cellipse cx='60' cy='116' rx='13' ry='8' transform='rotate(12 60 116)'/%3E%3Cpath d='M56 111c2 4 2 8 0 11' stroke-linecap='round'/%3E%3Cellipse cx='140' cy='112' rx='14' ry='9' transform='rotate(-20 140 112)'/%3E%3Cpath d='M136 106c2 4 2 8 0 12' stroke-linecap='round'/%3E%3Cellipse cx='188' cy='146' rx='12' ry='7.5' transform='rotate(14 188 146)'/%3E%3Cpath d='M184 141c2 3 2 7 0 10' stroke-linecap='round'/%3E%3Cellipse cx='92' cy='178' rx='14' ry='9' transform='rotate(-17 92 178)'/%3E%3Cpath d='M88 172c2 4 2 8 0 12' stroke-linecap='round'/%3E%3Cellipse cx='32' cy='172' rx='11' ry='7' transform='rotate(20 32 172)'/%3E%3Cpath d='M29 168c2 3 2 6 0 9' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: repeat, repeat;
-  background-size: auto, 220px 220px;
+    linear-gradient(rgba(247, 248, 243, 0.88), rgba(247, 248, 243, 0.88)),
+    url("/assets/background/latarbelakang_kopi.jpg");
+  background-repeat: no-repeat, repeat;
+  background-size: auto, 540px 540px;
+  background-position: center top, top left;
 }
 
 /* Permintaan UI: semua teks berbobot tebal diratakan ke regular */

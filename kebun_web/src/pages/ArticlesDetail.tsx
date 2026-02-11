@@ -31,7 +31,7 @@ export default function ArticleDetail() {
   if (!item) return <div className="max-w-5xl mx-auto px-4 py-12">Artikel tidak ditemukan.</div>;
 
   return (
-    <div className="bg-white">
+    <div className="bg-transparent">
       {/* hero */}
       <section className="relative">
         <div className="h-[42vh] md:h-[52vh] w-full overflow-hidden">
@@ -136,3 +136,4 @@ export default function ArticleDetail() {
     </div>
   );
 }
+

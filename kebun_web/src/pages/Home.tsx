@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, asArray, formatIdr, waLink } from "../api";
 import type { Article, Product } from "../types";
@@ -55,7 +55,7 @@ export default function Home() {
   }, [heroBanners.length]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-transparent">
       {/* HERO CAROUSEL (artikel menjadi banner) */}
       <section className="relative">
         <div className="h-[400px] md:h-[520px] w-full overflow-hidden relative">
@@ -164,14 +164,14 @@ export default function Home() {
             aria-label="Sebelumnya"
             className="hero-prev absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white font-black hover:bg-white/20"
           >
-            ‹
+            �
           </button>
           <button
             type="button"
             aria-label="Berikutnya"
             className="hero-next absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white font-black hover:bg-white/20"
           >
-            ›
+            �
           </button>
         </div>
       </section>
@@ -189,7 +189,7 @@ export default function Home() {
               <div className="p-4 text-sm text-slate-600 leading-relaxed">
                 Tulisan pendek tentang roasting, seduh, dan budaya kopi - bahasannya ringan.
                 <Link to="/articles" className="block mt-3 font-black text-emerald-700 hover:underline">
-                  Selengkapnya →
+                  Selengkapnya ?
                 </Link>
               </div>
             </div>
@@ -290,7 +290,7 @@ export default function Home() {
                   to="/menu"
                   className="inline-flex w-full justify-center px-4 py-3 rounded-2xl bg-emerald-600 text-white font-black text-sm hover:bg-emerald-700"
                 >
-                  Lihat Semua Produk →
+                  Lihat Semua Produk ?
                 </Link>
               </div>
             </div>
@@ -311,7 +311,7 @@ export default function Home() {
                 </h2>
               </div>
               <Link to="/articles" className="text-sm font-black text-emerald-700 hover:underline">
-                Lihat semua →
+                Lihat semua ?
               </Link>
             </div>
 
@@ -337,7 +337,7 @@ export default function Home() {
                     <div className="text-sm text-slate-600 leading-relaxed">
                       {a.excerpt || "Bacaan ringan seputar kopi, roasting, seduh, dan budaya komunitas."}
                     </div>
-                    <div className="text-sm font-black text-slate-900">Baca →</div>
+                    <div className="text-sm font-black text-slate-900">Baca ?</div>
                   </div>
                 </Link>
               ))}
@@ -423,7 +423,7 @@ export default function Home() {
               href="#"
               className="text-sm font-black text-white/80 hover:text-white hover:underline"
             >
-              Lainnya →
+              Lainnya ?
             </a>
           </div>
 
@@ -462,4 +462,5 @@ export default function Home() {
     </div>
   );
 }
+
 
