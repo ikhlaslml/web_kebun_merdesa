@@ -26,9 +26,9 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-50 px-3 pt-3">
       {/* header */}
-      <div className="bg-emerald-600/70 text-white border-b border-white/20 backdrop-blur-md shadow-[0_10px_30px_rgba(5,46,22,0.18)]">
+      <div className="overflow-hidden rounded-2xl bg-emerald-800/60 text-white border border-white/20 backdrop-blur-xl shadow-[0_14px_40px_rgba(5,46,22,0.24)]">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-4">
           <Link to="/" className="flex items-center gap-2 shrink-0">
             <div className="leading-tight">
@@ -63,7 +63,7 @@ export default function Navbar() {
             })}
           </nav>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="ml-auto flex items-center gap-2 shrink-0">
             {/* desktop search */}
             <form onSubmit={onSubmit} className="hidden md:flex items-center">
               <input
@@ -72,8 +72,14 @@ export default function Navbar() {
                 placeholder="Cari artikel kopi..."
                 className="w-64 bg-white/95 text-slate-900 border border-white/80 rounded-xl px-3.5 py-2 text-[13px] font-medium outline-none placeholder:text-slate-500 focus:ring-4 focus:ring-white/40 focus:border-white"
               />
-              <button className="ml-2 px-4 py-2 rounded-xl bg-white text-slate-900 border border-white/70 hover:bg-white/90 font-semibold text-[13px]">
-                Cari
+              <button
+                aria-label="Search"
+                className="ml-2 inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white text-slate-900 border border-white/70 hover:bg-white/90"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="16.65" y1="16.65" x2="21" y2="21" />
+                </svg>
               </button>
             </form>
 
@@ -89,9 +95,14 @@ export default function Navbar() {
             {/* mobile button */}
             <button
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden px-3 py-2 rounded-xl bg-white/15 border border-white/20 font-semibold text-[13px]"
+              aria-label="Toggle menu"
+              className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white/15 border border-white/20"
             >
-              Menu
+              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+              </svg>
             </button>
           </div>
         </div>
@@ -99,7 +110,7 @@ export default function Navbar() {
 
       {/* mobile drawer */}
       {open && (
-        <div className="md:hidden border-t border-emerald-800/40 bg-white">
+        <div className="md:hidden mt-2 overflow-hidden rounded-2xl border border-emerald-900/15 bg-white/95 backdrop-blur-md">
           <div className="max-w-7xl mx-auto px-4 py-4 space-y-3">
             <form onSubmit={onSubmit} className="flex gap-2">
               <input
@@ -108,8 +119,14 @@ export default function Navbar() {
                 placeholder="Cari artikel kopi..."
                 className="flex-1 border border-slate-200 rounded-xl px-3 py-2 text-sm outline-none focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-600"
               />
-              <button className="px-4 py-2 rounded-xl bg-white text-slate-900 border border-slate-200 font-semibold text-[13px]">
-                Cari
+              <button
+                aria-label="Search"
+                className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-white text-slate-900 border border-slate-200"
+              >
+                <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="16.65" y1="16.65" x2="21" y2="21" />
+                </svg>
               </button>
             </form>
 
