@@ -24,12 +24,14 @@ export default function App() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
   const isHomeRoute = location.pathname === "/";
+  const isArticleDetailRoute = /^\/articles\/[^/]+$/.test(location.pathname);
+  const shouldOffsetMain = !isAdminRoute && !isHomeRoute && !isArticleDetailRoute;
 
   return (
     <div className="min-h-screen flex flex-col bg-transparent text-dark">
       {!isAdminRoute && <Navbar />}
 
-      <main className={`flex-1 ${!isAdminRoute && !isHomeRoute ? "pt-24 md:pt-28" : ""}`}>
+      <main className={`flex-1 ${shouldOffsetMain ? "pt-24 md:pt-28" : ""}`}>
         <Routes>
           {/* Public */}
           <Route path="/" element={<Home />} />

@@ -36,25 +36,9 @@ export default function Articles() {
     });
   }, [items, search]);
 
-  const heroCover = useMemo(() => {
-    if (filtered.length && filtered[0].cover_image_url) return filtered[0].cover_image_url;
-    if (items.length && items[0].cover_image_url) return items[0].cover_image_url;
-    return "/assets/brand/gambar6.jpeg";
-  }, [filtered, items]);
-
   return (
-    <section className="pb-10">
-      <div className="h-[400px] md:h-[520px] w-full overflow-hidden relative">
-        <SmartImage
-          src={heroCover}
-          fallbackSrc="/assets/brand/gambar6.jpeg"
-          alt="Banner Artikel"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 to-transparent" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-10 grid lg:grid-cols-12 gap-8">
+    <section className="max-w-7xl mx-auto px-4 py-10">
+      <div className="grid lg:grid-cols-12 gap-8">
         <div className="lg:col-span-8">
           <div className="flex items-end justify-between gap-4">
             <div>

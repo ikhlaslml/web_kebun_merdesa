@@ -28,24 +28,8 @@ export default function Menu() {
     return Array.from(map.entries());
   }, [items]);
 
-  const heroCover = useMemo(() => {
-    if (items.length && items[0].image_url) return items[0].image_url;
-    return "/assets/brand/gambar6.jpeg";
-  }, [items]);
-
   return (
-    <section className="pb-10">
-      <div className="h-[400px] md:h-[520px] w-full overflow-hidden relative">
-        <SmartImage
-          src={heroCover}
-          fallbackSrc="/assets/brand/gambar6.jpeg"
-          alt="Banner Menu"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 to-transparent" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-10">
+    <section className="max-w-7xl mx-auto px-4 py-10">
       <div className="flex items-end justify-between gap-4">
         <div>
           <div className="text-xs font-black uppercase tracking-widest text-slate-500">produk</div>
@@ -112,7 +96,6 @@ export default function Menu() {
           {!items.length ? <div className="text-slate-500">Belum ada produk.</div> : null}
         </div>
       )}
-      </div>
     </section>
   );
 }
