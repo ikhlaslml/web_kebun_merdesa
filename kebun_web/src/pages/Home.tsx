@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+ï»¿import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, asArray, formatIdr, waLink } from "../api";
-import type { Article, Product } from "../types";
+import type { Article, Product, Channel } from "../types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
 import SmartImage from "../components/SmartImage";
@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [channels, setChannels] = useState<Channel[]>([]);
   const [activeBanner, setActiveBanner] = useState(0);
   const mapsUrl = import.meta.env.VITE_MAPS_URL || "https://g.co/kgs/ttHN2G";
 
@@ -22,6 +23,8 @@ export default function Home() {
         setProducts(asArray<Product>(p.data));
         const a = await api.get<Article[]>("/public/articles");
         setArticles(asArray<Article>(a.data));
+        const c = await api.get<Channel[]>("/public/channels");
+        setChannels(asArray<Channel>(c.data));
       } catch (e) {
         console.error(e);
       }
@@ -50,6 +53,19 @@ export default function Home() {
 
   const featuredProducts = useMemo(() => products.slice(0, 6), [products]);
   const latestArticles = useMemo(() => articles.slice(0, 8), [articles]);
+  const channelItems = useMemo(() => {
+    if (channels.length) return channels.slice(0, 3);
+
+    return latestArticles.slice(0, 3).map((a, idx) => ({
+      id: -(idx + 1),
+      title: a.title,
+      tag: "Artikel",
+      image_url: a.cover_image_url,
+      cta_label: "Tanya Jadwal",
+      whatsapp_message: `Halo Kebun Merdesa, saya mau info kegiatan: ${a.title}`,
+      is_active: true,
+    })) as Channel[];
+  }, [channels, latestArticles]);
 
   useEffect(() => {
     setActiveBanner(0);
@@ -166,14 +182,14 @@ export default function Home() {
             aria-label="Sebelumnya"
             className="hero-prev absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white font-black hover:bg-white/20"
           >
-            ‹
+            â€¹
           </button>
           <button
             type="button"
             aria-label="Berikutnya"
             className="hero-next absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white font-black hover:bg-white/20"
           >
-            ›
+            â€º
           </button>
         </div>
       </section>
@@ -438,30 +454,32 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mt-8">
-            {[
-              { title: "Ngobrol Kopi: Basic Espresso", tag: "Talk", img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80" },
-              { title: "Cupping Session: Kenali Notes", tag: "Workshop", img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80" },
-              { title: "Roasting Journey: Dari Green Bean", tag: "Behind the Scene", img: "https://images.unsplash.com/photo-1523942839745-7848d9f18e3c?auto=format&fit=crop&w=1200&q=80" },
-            ].map((v, idx) => (
-              <div key={idx} className="rounded-3xl overflow-hidden border border-white/10 bg-white/5">
+            {channelItems.map((v) => (
+              <div key={v.id} className="rounded-3xl overflow-hidden border border-white/10 bg-white/5">
                 <div className="aspect-[16/9] relative">
-                  <img src={v.img} alt={v.title} className="w-full h-full object-cover opacity-90" />
+                  <SmartImage
+                    src={v.image_url}
+                    fallbackSrc="/assets/brand/gambar6.jpeg"
+                    alt={v.title}
+                    className="w-full h-full object-cover opacity-90"
+                    loading="lazy"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4 space-y-2">
                     <div className="inline-flex px-3 py-1 rounded-full bg-white/10 border border-white/10 text-xs font-black">
-                      {v.tag}
+                      {v.tag || "Channel"}
                     </div>
                     <div className="font-black text-lg leading-snug">{v.title}</div>
                   </div>
                 </div>
                 <div className="p-4">
                   <a
-                    href={waLink(`Halo Kebun Merdesa, saya mau info kegiatan: ${v.title}`)}
+                    href={waLink(v.whatsapp_message || `Halo Kebun Merdesa, saya mau info kegiatan: ${v.title}`)}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex w-full justify-center px-4 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 font-black text-sm"
                   >
-                    Tanya Jadwal
+                    {v.cta_label || "Tanya Jadwal"}
                   </a>
                 </div>
               </div>
@@ -472,6 +490,7 @@ export default function Home() {
     </div>
   );
 }
+
 
 
 

@@ -35,7 +35,7 @@ export default function ArticleDetail() {
     <div className="bg-transparent">
       {/* hero */}
       <section className="relative">
-        <div className="h-[42vh] md:h-[52vh] w-full overflow-hidden">
+        <div className="h-[400px] md:h-[520px] w-full overflow-hidden">
           <SmartImage
             src={cover}
             fallbackSrc="/assets/brand/gambar6.jpeg"

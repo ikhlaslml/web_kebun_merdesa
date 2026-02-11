@@ -17,3 +17,14 @@ export type Article = {
   cover_image_url?: string | null;
   published_at?: string | null;
 };
+
+export type Channel = {
+  id: number;
+  title: string;
+  tag?: string | null;
+  image_url?: string | null;
+  cta_label?: string | null;
+  whatsapp_message?: string | null;
+  sort_order?: number;
+  is_active: boolean;
+};
